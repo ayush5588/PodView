@@ -35,19 +35,21 @@ func main() {
 	*/
 	nc := podview.NewPodViewClient(c, "kube-state-metrics", "")
 
-	_, err = nc.GetPods()
+	pods, err = nc.GetPods()
 	if err != nil {
 		panic(err)
 
 	}
 
-	// fmt.Println(pods.Pods)
+	fmt.Println(pods.Pods)
 
-	podWithFailedStatus, err := nc.GetPodsWithStatus("Pending")
+	podsWithPendingStatus, err := nc.GetPodsWithStatus("Pending")
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Println(podWithFailedStatus.Pods)
+	fmt.Println("Pods belonging to the given deployment & having status as Pending: ")
+	
+	fmt.Println(podsWithPendingStatus.Pods)
 
 }
