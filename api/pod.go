@@ -7,6 +7,7 @@ type PodList struct {
 
 // Pod ...
 type Pod struct {
-	Name   string `json:"name"`
-	Status string `json:"status"`
+	Name    string `json:"name"`
+	Status  string `json:"status"`
+	Message string `json:"message"`
 }
