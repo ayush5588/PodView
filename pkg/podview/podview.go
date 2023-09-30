@@ -8,9 +8,9 @@ import (
 	"sync"
 
 	"github.com/ayush5588/PodView/api"
+
 	v1 "k8s.io/api/apps/v1"
 	"k8s.io/apimachinery/pkg/fields"
-	v1 "k8s.io/client-go/applyconfigurations/apps/v1"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -25,6 +25,7 @@ type podViewClient struct {
 	deploymentNamespace string
 }
 
+// NewPodViewClient creates a new ViewClient
 func NewPodViewClient(c client.Client, deploymentName, deploymentNamespace string) podViewClient {
 	return podViewClient{
 		Client:              c,
@@ -36,10 +37,10 @@ func NewPodViewClient(c client.Client, deploymentName, deploymentNamespace strin
 func (p podViewClient) ValidateDeployment() (v1.Deployment, error) {
 	depName := p.deploymentName
 
-	parsedFieldSelector := fields.ParseSelector(fmt.Sprintf("metadata.name: %s", depName))
+	parsedFieldSelector, _ := fields.ParseSelector(fmt.Sprintf("metadata.name: %s", depName))
 
 	listOptions := &client.ListOptions{
-		FieldSelctor: parsedFieldSelector,
+		FieldSelector: parsedFieldSelector,
 	}
 
 	if p.deploymentNamespace != "" {
